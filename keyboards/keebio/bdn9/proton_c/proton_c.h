@@ -1,4 +1,4 @@
-/* Copyright 2019 Danny Nguyen <danny@keeb.io>
+/* Copyright 2019 kratsyn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,13 +15,6 @@
  */
 #pragma once
 
-#ifdef KEYBOARD_keebio_bdn9_rev1
-    #include "rev1.h"
-#endif
-#ifdef KEYBOARD_keebio_bdn9_proton_c
-    #include "proton_c.h"
-#endif
-
 #include "quantum.h"
 
 /* This a shortcut to help you visually see your layout.
@@ -33,12 +26,14 @@
  * represents the switch matrix.
  */
 #define LAYOUT( \
-    KA1, KA2, KA3, \
-    KB1, KB2, KB3, \
-    KC1, KC2, KC3 \
+	KA1, KA2, KA3, \
+	KB1, KB2, KB3, \
+	KC1, KC2, KC3 \
 ) \
 { \
-    { KA1, KA2, KA3 }, \
-    { KB1, KB2, KB3 }, \
-    { KC1, KC2, KC3 } \
+	{ KA1, KA2, KA3 }, \
+	{ KB1, KB2, KB3 }, \
+	{ KC1, KC2, KC3 } \
 }
+
+void blink_led(uint8_t times);
