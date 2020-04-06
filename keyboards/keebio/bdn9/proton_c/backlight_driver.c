@@ -18,7 +18,6 @@
 #include "debug.h"
 #include "eeconfig.h"
 #include "backlight.h"
-#include "backlight_driver.h"
 
 #ifndef BACKLIGHT_BREATHING_STEPS
 #   define BACKLIGHT_BREATHING_STEPS    128
@@ -31,6 +30,10 @@ static uint16_t breath_intval  = (uint16_t)BREATHING_PERIOD * 256 / BACKLIGHT_BR
 static uint32_t breath_duty    = 0;
 static uint8_t  breath_index   = 0;
 static uint16_t breath_count   = 0;
+
+void backlight_reset_callback(void);
+static void backlight_callback(PWMDriver *pwmp);
+void set_callback(bool on);
 
 static const PWMConfig pwmCfg = {
     .frequency = 0xFFFF,
@@ -132,7 +135,6 @@ static void backlight_callback(PWMDriver *pwmp) {
 }
 
 // track down where this is actually used. at first glance, our callback seems to be a duplicate.
-// 
 void backlight_task(void) {}
 
 void set_callback(bool on) {
