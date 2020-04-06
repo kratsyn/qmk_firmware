@@ -14,7 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "hal.h"
+#include <hal.h>
 #include "debug.h"
 #include "eeconfig.h"
 #include "backlight.h"
