@@ -20,9 +20,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "config_common.h"
 
 /* USB Device descriptor parameter */
-#define VENDOR_ID       0xDEAD
-#define PRODUCT_ID      0xBEEF
-#define DEVICE_VER      0x8008
+#define VENDOR_ID       0xCB10
+#define PRODUCT_ID      0x1133
+#define DEVICE_VER      0x0101
 #define MANUFACTURER    Keebio
 #define PRODUCT         BDN9
 #define DESCRIPTION     3x3 Macropad with Rotary Encoders
