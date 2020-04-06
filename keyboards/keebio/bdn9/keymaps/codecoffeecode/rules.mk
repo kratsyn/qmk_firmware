@@ -1,2 +1,2 @@
 MOUSEKEY_ENABLE = yes 
-CTPC = yes
+#CTCP=yes
