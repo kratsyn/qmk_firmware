@@ -90,27 +90,15 @@ void encoder_update_user(uint8_t index, bool clockwise) {
         switch (layer) {
             // mouse wheel as default
             default:
-                if (clockwise) {
-                    tap_code(KC_WH_D);
-                } else {
-                    tap_code(KC_WH_U);
-                }
+                tap_code((clockwise) ? KC_WH_D : KC_WH_U);
                 break;
             // backlight on layer 2
             case 2:
-                if (clockwise) {
-                    backlight_increase();
-                } else {
-                    backlight_decrease();
-                }
+                (clockwise) ? backlight_increase() : backlight_decrease();
                 break;
             // rgb hue on layer 3
             case 3:
-                if (clockwise) {
-                    rgblight_increase_hue();
-                } else {
-                    rgblight_decrease_hue();
-                }
+                (clockwise) ? rgblight_increase_hue() : rgblight_decrease_hue();
                 break;
         }
     // Encoder 1
@@ -118,19 +106,11 @@ void encoder_update_user(uint8_t index, bool clockwise) {
         switch (layer) {
             // volume as default
             default:
-                if (clockwise) {
-                    tap_code(KC_VOLU);
-                } else {
-                    tap_code(KC_VOLD);
-                }
+                tap_code((clockwise) ? KC_VOLU : KC_VOLD);
                 break;
             // rgb saturation on layer 3
             case 3:
-                if (clockwise) {
-                    rgblight_increase_sat();
-                } else {
-                    rgblight_decrease_sat();
-                }
+                (clockwise) ? rgblight_increase_sat() : rgblight_decrease_sat();
                 break;
         }
     }
