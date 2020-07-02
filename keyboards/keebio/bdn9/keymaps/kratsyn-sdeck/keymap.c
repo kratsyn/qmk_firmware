@@ -23,12 +23,12 @@ typedef struct {
 enum { SINGLE_TAP = 1, DOUBLE_TAP = 2, TRIPLE_TAP = 3, QUAD_TAP = 4, QUIN_TAP = 5 };
 enum { TD_LAYR = 0 };
 
-const rgblight_segment_t PROGMEM        default_layer[]   = RGBLIGHT_LAYER_SEGMENTS({0, 4, HSV_PURPLE});
-const rgblight_segment_t PROGMEM        macro_layer[]     = RGBLIGHT_LAYER_SEGMENTS({0, 1, HSV_PURPLE});
-const rgblight_segment_t PROGMEM        backlight_layer[] = RGBLIGHT_LAYER_SEGMENTS({1, 1, HSV_PURPLE});
-const rgblight_segment_t PROGMEM        rgb_layer[]       = RGBLIGHT_LAYER_SEGMENTS({2, 1, HSV_PURPLE});
-const rgblight_segment_t PROGMEM        quantum_layer[]   = RGBLIGHT_LAYER_SEGMENTS({3, 1, HSV_RED});
-const rgblight_segment_t *const PROGMEM lighting_layers[] = RGBLIGHT_LAYERS_LIST(default_layer, macro_layer, backlight_layer, rgb_layer, quantum_layer);
+const rgblight_segment_t PROGMEM        default_layer[]   = RGBLIGHT_LAYER_SEGMENTS({0, 4, HSV_WHITE});
+const rgblight_segment_t PROGMEM        macro_layer[]     = RGBLIGHT_LAYER_SEGMENTS({0, 1, HSV_WHITE});
+const rgblight_segment_t PROGMEM        backlight_layer[] = RGBLIGHT_LAYER_SEGMENTS({1, 1, HSV_WHITE});
+const rgblight_segment_t PROGMEM        rgb_layer[]       = RGBLIGHT_LAYER_SEGMENTS({2, 1, HSV_WHITE});
+const rgblight_segment_t PROGMEM        quantum_layer[]   = RGBLIGHT_LAYER_SEGMENTS({3, 1, HSV_WHITE});
+const rgblight_segment_t* const PROGMEM lighting_layers[] = RGBLIGHT_LAYERS_LIST(default_layer, macro_layer, backlight_layer, rgb_layer, quantum_layer);
 
 int  cur_dance(qk_tap_dance_state_t *state);
 void ql_finished(qk_tap_dance_state_t *state, void *user_data);
@@ -142,23 +142,23 @@ void ql_finished(qk_tap_dance_state_t *state, void *user_data) {
     switch (ql_tap_state.state) {
         case SINGLE_TAP:
             layer_move(0);
-            rgblight_blink_layer(default_layer, 1000);
+            rgblight_blink_layer(0, 1200);
             break;
         case DOUBLE_TAP:
             layer_on(1);
-            rgblight_blink_layer(macro_layer, 1000);
+            rgblight_blink_layer(1, 1200);
             break;
         case TRIPLE_TAP:
             layer_on(2);
-            rgblight_blink_layer(backlight_layer, 1000);
+            rgblight_blink_layer(2, 1200);
             break;
         case QUAD_TAP:
             layer_on(3);
-            rgblight_blink_layer(rgb_layer, 1000);
+            rgblight_blink_layer(3, 1200);
             break;
         case QUIN_TAP:
             layer_on(4);
-            rgblight_blink_layer(quantum_layer, 1000);
+            rgblight_blink_layer(4, 1200);
             break;
     }
 }
