@@ -27,6 +27,13 @@ enum { SINGLE_TAP = 1, DOUBLE_TAP = 2, TRIPLE_TAP = 3, QUAD_TAP = 4, QUIN_TAP = 
 enum { TD_LAYR = 0 };
 enum custom_keycodes { ALT_TAB_TICK = SAFE_RANGE };
 
+const rgblight_segment_t PROGMEM        default_layer[]   = RGBLIGHT_LAYER_SEGMENTS({0, 4, HSV_WHITE});
+const rgblight_segment_t PROGMEM        macro_layer[]     = RGBLIGHT_LAYER_SEGMENTS({0, 1, HSV_WHITE});
+const rgblight_segment_t PROGMEM        backlight_layer[] = RGBLIGHT_LAYER_SEGMENTS({1, 1, HSV_WHITE});
+const rgblight_segment_t PROGMEM        rgb_layer[]       = RGBLIGHT_LAYER_SEGMENTS({2, 1, HSV_WHITE});
+const rgblight_segment_t PROGMEM        quantum_layer[]   = RGBLIGHT_LAYER_SEGMENTS({3, 1, HSV_WHITE});
+const rgblight_segment_t *const PROGMEM lighting_layers[] = RGBLIGHT_LAYERS_LIST(default_layer, macro_layer, backlight_layer, rgb_layer, quantum_layer);
+
 int  cur_dance(qk_tap_dance_state_t *state);
 void ql_finished(qk_tap_dance_state_t *state, void *user_data);
 void ql_reset(qk_tap_dance_state_t *state, void *user_date);
@@ -101,7 +108,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
                 (clockwise) ? rgblight_increase_hue() : rgblight_decrease_hue();
                 break;
         }
-    // Encoder 1
+        // Encoder 1
     } else if (index == 1) {
         switch (layer) {
             // volume as default
@@ -124,9 +131,7 @@ void matrix_scan_user(void) {
     }
 }
 
-void eeconfig_init_user(void) {  // EEPROM Reset
-    dprint("[SYS] EEPROM Reset to default values.\n");
-}
+void keyboard_post_init_user(void) { rgblight_layers = lighting_layers; }
 
 int cur_dance(qk_tap_dance_state_t *state) {
     if (state->count == 1) {
@@ -153,27 +158,27 @@ void ql_finished(qk_tap_dance_state_t *state, void *user_data) {
     ql_tap_state.state = cur_dance(state);
     switch (ql_tap_state.state) {
         case SINGLE_TAP:
-            dprint("[TD] Layer change. (0)\n");
             layer_move(0);
+            rgblight_blink_layer(0, 1200);
             break;
         case DOUBLE_TAP:
-            dprint("[TD] Layer change. (1)\n");
             layer_on(1);
+            rgblight_blink_layer(1, 1200);
             break;
         case TRIPLE_TAP:
-            dprint("[TD] Layer change. (2)\n");
             layer_on(2);
+            rgblight_blink_layer(2, 1200);
             break;
         case QUAD_TAP:
-            dprint("[TD] Layer change. (3)\n");
             layer_on(3);
+            rgblight_blink_layer(3, 1200);
             break;
         case QUIN_TAP:
-            dprint("[TD] Layer change. (4)\n");
             layer_on(4);
+            rgblight_blink_layer(4, 1200);
             break;
     }
 }
 
-void ql_reset(qk_tap_dance_state_t *state, void *user_data) { ql_tap_state.state = 0; }
+void                  ql_reset(qk_tap_dance_state_t *state, void *user_data) { ql_tap_state.state = 0; }
 qk_tap_dance_action_t tap_dance_actions[] = {[TD_LAYR] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, ql_finished, ql_reset)};
