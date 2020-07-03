@@ -28,7 +28,7 @@ const rgblight_segment_t PROGMEM        macro_layer[]     = RGBLIGHT_LAYER_SEGME
 const rgblight_segment_t PROGMEM        backlight_layer[] = RGBLIGHT_LAYER_SEGMENTS({1, 1, HSV_WHITE});
 const rgblight_segment_t PROGMEM        rgb_layer[]       = RGBLIGHT_LAYER_SEGMENTS({2, 1, HSV_WHITE});
 const rgblight_segment_t PROGMEM        quantum_layer[]   = RGBLIGHT_LAYER_SEGMENTS({3, 1, HSV_WHITE});
-const rgblight_segment_t* const PROGMEM lighting_layers[] = RGBLIGHT_LAYERS_LIST(default_layer, macro_layer, backlight_layer, rgb_layer, quantum_layer);
+const rgblight_segment_t *const PROGMEM lighting_layers[] = RGBLIGHT_LAYERS_LIST(default_layer, macro_layer, backlight_layer, rgb_layer, quantum_layer);
 
 int  cur_dance(qk_tap_dance_state_t *state);
 void ql_finished(qk_tap_dance_state_t *state, void *user_data);
@@ -42,6 +42,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_PGUP, KC_UP, KC_PGDOWN,
         KC_LEFT, KC_DOWN, KC_RGHT
     ),
+	// User 1 (VIA MAPPED)
     [1] = LAYOUT(
         _______, _______, _______,
         _______, _______, _______,
@@ -108,10 +109,6 @@ void encoder_update_user(uint8_t index, bool clockwise) {
                 break;
         }
     }
-}
-
-void eeconfig_init_user(void) {  // EEPROM Reset
-    dprint("[SYS] EEPROM Reset to default values.\n");
 }
 
 void keyboard_post_init_user(void) { rgblight_layers = lighting_layers; }
