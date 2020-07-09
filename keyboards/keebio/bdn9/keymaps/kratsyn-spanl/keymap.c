@@ -23,18 +23,37 @@ typedef struct {
 enum { SINGLE_TAP = 1, DOUBLE_TAP = 2, TRIPLE_TAP = 3, QUAD_TAP = 4, QUIN_TAP = 5 };
 enum { TD_LAYR = 0 };
 
-const rgblight_segment_t PROGMEM        default_layer[]   = RGBLIGHT_LAYER_SEGMENTS({0, 4, HSV_WHITE});
-const rgblight_segment_t PROGMEM        macro_layer[]     = RGBLIGHT_LAYER_SEGMENTS({0, 1, HSV_WHITE});
-const rgblight_segment_t PROGMEM        backlight_layer[] = RGBLIGHT_LAYER_SEGMENTS({1, 1, HSV_WHITE});
-const rgblight_segment_t PROGMEM        rgb_layer[]       = RGBLIGHT_LAYER_SEGMENTS({2, 1, HSV_WHITE});
-const rgblight_segment_t PROGMEM        quantum_layer[]   = RGBLIGHT_LAYER_SEGMENTS({3, 1, HSV_WHITE});
-const rgblight_segment_t *const PROGMEM lighting_layers[] = RGBLIGHT_LAYERS_LIST(default_layer, macro_layer, backlight_layer, rgb_layer, quantum_layer);
-
 int  cur_dance(qk_tap_dance_state_t *state);
 void ql_finished(qk_tap_dance_state_t *state, void *user_data);
 void ql_reset(qk_tap_dance_state_t *state, void *user_date);
 
 // clang-format off
+led_config_t g_led_config = {
+	{
+		{ NO_LED, NO_LED, NO_LED },
+		{ NO_LED, NO_LED, NO_LED },
+		{ NO_LED, NO_LED, NO_LED }
+	}, {
+		{ 224, 0   }, { 192, 0   }, { 160, 0   }, { 128, 0   }, { 96 , 0   }, { 64 , 0   }, { 32 , 0   }, { 0  , 0   },
+		{ 0  , 32  }, { 32 , 32  }, { 64 , 32  }, { 96 , 32  }, { 128, 32  }, { 160, 32  }, { 192, 32  }, { 224, 32  },
+		{ 224, 64  }, { 192, 64  }, { 160, 64  }, { 128, 64  }, { 96 , 64  }, { 64 , 64  }, { 32 , 64  }, { 0  , 64  },
+		{ 0  , 96  }, { 32 , 96  }, { 64 , 96  }, { 96 , 96  }, { 128, 96  }, { 160, 96  }, { 192, 96  }, { 224, 96  },
+		{ 224, 128 }, { 192, 128 }, { 160, 128 }, { 128, 128 }, { 96 , 128 }, { 64 , 128 }, { 32 , 128 }, { 0  , 128 },
+		{ 0  , 160 }, { 32 , 160 }, { 64 , 160 }, { 96 , 160 }, { 128, 160 }, { 160, 160 }, { 192, 160 }, { 224, 160 },
+		{ 224, 192 }, { 192, 192 }, { 160, 192 }, { 128, 192 }, { 96 , 192 }, { 64 , 192 }, { 32 , 192 }, { 0  , 192 },
+		{ 0  , 224 }, { 32 , 224 }, { 64 , 224 }, { 96 , 224 }, { 128, 224 }, { 160, 224 }, { 192, 224 }, { 224, 224 }
+	}, {
+		0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+		0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+		0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+		0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+		0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+		0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+		0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+		0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
+	}
+};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // User 0
     [0] = LAYOUT(
@@ -112,7 +131,6 @@ void encoder_update_user(uint8_t index, bool clockwise) {
 }
 
 void keyboard_post_init_user(void) { 
-	rgblight_layers = lighting_layers;
 }
 
 int cur_dance(qk_tap_dance_state_t *state) {
@@ -141,23 +159,18 @@ void ql_finished(qk_tap_dance_state_t *state, void *user_data) {
     switch (ql_tap_state.state) {
         case SINGLE_TAP:
             layer_move(0);
-            rgblight_blink_layer(0, 1200);
             break;
         case DOUBLE_TAP:
             layer_on(1);
-            rgblight_blink_layer(1, 1200);
             break;
         case TRIPLE_TAP:
             layer_on(2);
-            rgblight_blink_layer(2, 1200);
             break;
         case QUAD_TAP:
             layer_on(3);
-            rgblight_blink_layer(3, 1200);
             break;
         case QUIN_TAP:
             layer_on(4);
-            rgblight_blink_layer(4, 1200);
             break;
     }
 }
